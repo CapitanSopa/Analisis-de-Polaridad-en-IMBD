@@ -1,11 +1,6 @@
 # =====================================================================
 # Dependencias del proyecto: Análisis de Sentimiento IMDB con VADER (APIT)
 # ---------------------------------------------------------------------
-# Se usan cotas mínimas (>=) para que el entorno instale sin fricción en
-# Google Colab o en una máquina local. Los resultados numéricos del estudio
-# (exactitudes 0.6814 / 0.6992 y la prueba de McNemar) dependen del lexicón
-# 'vader_lexicon' de NLTK, que es estable entre versiones; por eso se
-# reproducen en un rango amplio de versiones de las demás bibliotecas.
 #
 # Entorno exacto con el que se verificó la reproducción (ver README):
 #   python 3.12 · pandas 3.0.2 · numpy 2.4.4 · nltk 3.9.4
