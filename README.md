@@ -14,10 +14,9 @@ El estudio aísla una única variable de diseño, el grado de preprocesamiento d
 analisis-sentimiento-imdb-apit/
 ├── README.md
 ├── requirements.txt
-├── Analisis_Sentimiento_IMDB_V3.ipynb     # Notebook principal (núcleo del proyecto)
+├── Analisis_Sentimiento_IMDB.ipynb    
 ├── dataset/
 │   └── IMDB_Dataset.csv                    # NO incluido (66 MB). Ver "Datos" más abajo.
-└── Articulo_APIT_Analisis_Sentimiento_IMDB.docx   # Artículo académico (opcional)
 ```
 
 ## Datos
