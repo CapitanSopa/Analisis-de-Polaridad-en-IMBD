@@ -15,7 +15,6 @@ analisis-sentimiento-imdb-apit/
 ├── README.md
 ├── requirements.txt
 ├── Analisis_Sentimiento_IMDB_V3.ipynb     # Notebook principal (núcleo del proyecto)
-├── celda_mcnemar.py                       # Celda de significancia para pegar al final del notebook
 ├── dataset/
 │   └── IMDB_Dataset.csv                    # NO incluido (66 MB). Ver "Datos" más abajo.
 └── Articulo_APIT_Analisis_Sentimiento_IMDB.docx   # Artículo académico (opcional)
@@ -23,35 +22,11 @@ analisis-sentimiento-imdb-apit/
 
 ## Datos
 
-El corpus es el dataset "IMDB Dataset of 50K Movie Reviews", publicado originalmente por Lakshmipathi N en Kaggle y construido a partir del conjunto de Maas et al. (2011). Tiene dos columnas: `review`, con el texto libre de la reseña en inglés, y `sentiment`, con la etiqueta real `positive` o `negative`.
+El corpus es el dataset "IMDB Dataset of 50K Movie Reviews", publicado originalmente por Lakshmipathi N en Kaggle. Tiene dos columnas: `review`, con el texto libre de la reseña en inglés, y `sentiment`, con la etiqueta real `positive` o `negative`.
 
-El archivo no se incluye en el repositorio por su tamaño (66 MB) y por su licencia. Para obtenerlo basta con descargarlo a la carpeta `dataset/` con el nombre que espera el notebook. Desde un espejo público en GitHub, el comando es el siguiente.
-
-```bash
-mkdir -p dataset
-curl -L "https://raw.githubusercontent.com/Ankit152/IMDB-sentiment-analysis/master/IMDB-Dataset.csv" -o dataset/IMDB_Dataset.csv
-```
+El archivo no se incluye en el repositorio por su tamaño (66 MB) y por su licencia. Para obtenerlo basta con descargarlo a la carpeta `dataset/` con el nombre que espera el notebook. 
 
 El notebook está diseñado para ser robusto: si no encuentra el CSV en `dataset/IMDB_Dataset.csv`, recurre a un pequeño bloque de datos simulados y avisa de ello, de modo que las celdas siguen ejecutándose aunque el dataset no esté presente.
-
-## Cómo reproducir
-
-Tras clonar el repositorio y situarse en su carpeta, el procedimiento completo consiste en instalar las dependencias, descargar el dataset como se indicó arriba y ejecutar el notebook de principio a fin. Los recursos lingüísticos de NLTK (el lexicón `vader_lexicon`, las `stopwords`, `wordnet`, `omw-1.4` y `punkt`) se descargan automáticamente desde la primera celda del notebook, por lo que no requieren instalación manual.
-
-```bash
-pip install -r requirements.txt
-jupyter notebook Analisis_Sentimiento_IMDB_V3.ipynb
-```
-
-El procedimiento es determinista: ni VADER ni el preprocesamiento introducen aleatoriedad, de modo que no se requieren semillas y cada ejecución reproduce siempre los mismos resultados.
-
-## Resultados esperados
-
-Si la reproducción es correcta, las exactitudes globales sirven como prueba de cordería. El enfoque A (texto preprocesado) alcanza una exactitud de 0.6814 y el enfoque B (texto crudo) de 0.6992, una diferencia de 1.78 puntos porcentuales a favor de no preprocesar. El modelo final adoptado es el B, cuya matriz de confusión es [[13391, 11307], [3606, 21278]] con el orden de clases negativa y positiva.
-
-La diferencia entre ambos enfoques se contrasta con la prueba de McNemar sobre las predicciones pareadas, implementada en `celda_mcnemar.py`. De las 49,582 reseñas hay 5,596 casos discordantes: el enfoque B recupera 3,240 reseñas que A clasificaba mal y solo deteriora 2,356 que A acertaba, una mejora neta de 884 reseñas. El estadístico de McNemar con corrección de continuidad es de 139.33 con un grado de libertad, lo que da un valor p de aproximadamente 3.7 × 10⁻³² (la prueba binomial exacta da 2.8 × 10⁻³²). La diferencia es, por tanto, altamente significativa y no atribuible al azar.
-
-Para reproducir este último cálculo, basta con pegar el contenido de `celda_mcnemar.py` como una nueva celda al final del notebook, una vez que el DataFrame `df` ya contiene las columnas `sentiment`, `sent_limpia` y `pred_sentiment`.
 
 ## Entorno verificado
 
